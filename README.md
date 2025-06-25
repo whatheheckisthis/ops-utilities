@@ -332,7 +332,20 @@ This repository includes a master script with useful Bash functions for:
 - Changelog parsing and automation
 - GitHub repo backup
 
-To see the full set of functions, view [`master_toolkit.txt`](./master_toolkit.txt)
+### OpenSSL Bash Utilities
+
+These scripts support secure handling of logs and sensitive configuration files using symmetric encryption via `openssl`.
+
+- `generate.sh` — Encrypts any file using OpenSSL and saves output to `./files/`
+- `read.sh` — Decrypts previously encrypted files with optional inline passphrase support
+
+```bash
+# Encrypt a private key or log file
+./generate.sh path/to/your/file.txt
+
+# Decrypt the file interactively
+./read.sh ./files/file.txt.dat
+
 
 
 
