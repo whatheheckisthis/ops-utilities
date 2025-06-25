@@ -1,7 +1,4 @@
 
-
-
-
 # Bash Utilities for Secure Operations and Daily Workflow Automation
 
 Encryption, decryption, secure file handling, and daily support-ready Bash tools designed for technical support, DevOps, and service workflows.
@@ -154,57 +151,182 @@ Run the full environment init with:
 
 ---
 
-## Directory Structure
 
-```bash
-.
-├── generate.sh            # Encrypts input files
-├── read.sh                # Decrypts input files
-├── cleanup_logs.sh        # Deletes stale logs
-├── check_venv.sh          # Checks Python venv state
-├── backup_repo.sh         # GitHub repo mirroring
-├── timestamp_tail.sh      # Adds timestamps to live logs
-├── md_to_html.sh          # Converts markdown to HTML
-├── init_environment.sh    # Environment readiness check
-├── files/                 # Stores encrypted files
-└── README.md              # This file
+### File Tree:
+
+```
+├── generate.sh             # Encrypts input files with OpenSSL
+├── read.sh                 # Decrypts encrypted files
+├── cleanup_logs.sh         # Deletes stale `.log` files
+├── check_venv.sh           # Checks if Python venv is active
+├── backup_repo.sh          # Mirrors GitHub repo to backup folder
+├── timestamp_tail.sh       # Adds timestamp to live `tail -f` output
+├── md_to_html.sh           # Converts Markdown files to HTML
+├── init_environment.sh     # Bootstraps VCS/venv/changelog check
+├── generate_auto_changelog.sh  # Generates CHANGELOG from Git
+├── cleanup_changelog.sh        # Cleans blank/duplicate entries
+└── files/                  # Folder to store encrypted files
 ```
 
 ---
+
+###  `generate.sh`
+
+```bash
+#!/bin/bash
+# Encrypts a file using OpenSSL with AES-256 encryption
+
+INPUT=$1
+OUTDIR="files"
+mkdir -p $OUTDIR
+
+echo -n "Enter passphrase for encryption: "
+read -s PASSPHRASE
+echo
+
+openssl enc -aes-256-cbc -salt -in "$INPUT" -out "$OUTDIR/$(basename "$INPUT").enc" -pass pass:$PASSPHRASE
+echo "[✓] Encrypted file saved to $OUTDIR/$(basename "$INPUT").enc"
+```
+
+---
+
+###  `read.sh`
+
+```bash
+#!/bin/bash
+# Decrypts an encrypted file using OpenSSL
+
+INPUT=$1
+
+echo -n "Enter passphrase to decrypt: "
+read -s PASSPHRASE
+echo
+
+openssl enc -d -aes-256-cbc -in "$INPUT" -pass pass:$PASSPHRASE
+```
+
+---
+
+### `cleanup_logs.sh`
+
+```bash
+#!/bin/bash
+# Deletes .log files older than 7 days from current directory
+
+find . -type f -name "*.log" -mtime +7 -exec rm -v {} \;
+echo "[✓] Old logs cleaned up"
+```
+
+---
+
+###  `check_venv.sh`
+
+```bash
+#!/bin/bash
+# Checks whether a Python virtual environment is active
+
+if [[ "$VIRTUAL_ENV" != "" ]]; then
+  echo "[✓] Virtual environment is active: $VIRTUAL_ENV"
+else
+  echo "[✗] No virtual environment detected"
+fi
+```
+
+---
+
+###  `backup_repo.sh`
+
+```bash
+#!/bin/bash
+# Mirrors a GitHub repository to a local backup folder
+
+REPO_DIR=$1
+BACKUP_DIR="repo_backup_$(date +%F_%T)"
+mkdir "$BACKUP_DIR"
+cp -r "$REPO_DIR" "$BACKUP_DIR"
+echo "[✓] Repository backed up to $BACKUP_DIR"
+```
+
+---
+
+### `timestamp_tail.sh`
+
+```bash
+#!/bin/bash
+# Adds timestamps to the output of tail -f
+
+FILE=$1
+tail -f "$FILE" | while read line; do
+  echo "[$(date +%F_%T)] $line"
+done
+```
+
+---
+
+###  `md_to_html.sh`
+
+```bash
+#!/bin/bash
+# Converts a Markdown file to HTML using pandoc
+
+INPUT=$1
+OUTPUT="${INPUT%.md}.html"
+
+pandoc "$INPUT" -o "$OUTPUT"
+echo "[✓] Converted $INPUT to $OUTPUT"
+```
+
+---
+
+### `init_environment.sh`
+
+```bash
+#!/bin/bash
+# Preps environment by checking VCS, venv, and updating changelog
+
+./check_venv.sh
+./generate_auto_changelog.sh
+echo "[✓] Environment ready"
+```
+
+---
+
+### `generate_auto_changelog.sh`
+
+```bash
+#!/bin/bash
+# Generates a changelog from Git history into AUTO_CHANGELOG.md
+
+OUTFILE="AUTO_CHANGELOG.md"
+echo "# Auto-generated Changelog" > $OUTFILE
+echo "" >> $OUTFILE
+git log --pretty=format:'- %ad: %s' --date=short >> $OUTFILE
+echo "[✓] Changelog written to $OUTFILE"
+```
+
+---
+
+### `cleanup_changelog.sh`
+
+```bash
+#!/bin/bash
+# Cleans up AUTO_CHANGELOG.md by removing blank lines and duplicate entries
+
+FILE="AUTO_CHANGELOG.md"
+if [[ -f "$FILE" ]]; then
+  awk '!seen[$0]++' "$FILE" | sed '/^$/d' > tmp && mv tmp "$FILE"
+  echo "[✓] Cleaned $FILE"
+else
+  echo "[✗] $FILE not found"
+fi
+```
+
+---
+
+
 
 ## License
 
 This repo is licensed under the MIT License.
 
-
-
-
-Decrypt a File
-Interactive Mode
-bash
-Copy
-Edit
-./read.sh ./files/filename.dat
-You’ll be prompted to enter the decryption passphrase:
-
-text
-Copy
-Edit
-Input passphrase to read the content: ******
-Inline Passphrase (not recommended for sensitive use)
-bash
-Copy
-Edit
-./read.sh ./files/filename.dat yourpassphrase
-Output to File
-bash
-Copy
-Edit
-./read.sh ./files/filename.dat > output.txt
-Use Cases
-Secure backups of SSH keys or API secrets
-
-Encrypted config file storage in CI/CD pipelines
-
-Support desk use for quick data protection/decryption workflows
 
