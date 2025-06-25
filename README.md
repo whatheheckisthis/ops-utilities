@@ -323,6 +323,16 @@ fi
 
 ---
 
+### Toolkit Scripts
+
+This repository includes a master script with useful Bash functions for:
+- Encrypted file handling (`generate.sh`, `read.sh`)
+- Log cleanup and timestamping
+- Markdown to HTML conversion
+- Changelog parsing and automation
+- GitHub repo backup
+
+To see the full set of functions, view [`master_toolkit.txt`](./master_toolkit.txt)
 
 
 
