@@ -1,0 +1,25 @@
+#!/bin/bash
+# CLI menu for all utility scripts
+
+echo "=== Ops Toolkit Menu ==="
+echo "1) Initialize Environment"
+echo "2) Cleanup Logs"
+echo "3) Backup Repository"
+echo "4) Parse Changelog"
+echo "5) Tail Log with Timestamp"
+echo "6) Triage Logs"
+echo "7) Track Time"
+echo "q) Quit"
+read -p "Choose an option: " choice
+
+case "$choice" in
+  1) bash scripts/init_environment.sh ;;
+  2) bash scripts/cleanup_logs.sh ;;
+  3) bash scripts/backup_repo.sh ;;
+  4) bash scripts/changelog_parser.sh ;;
+  5) read -p "Enter log file path: " path; bash scripts/timestamp_tail.sh "$path" ;;
+  6) bash scripts/triage_logs.sh ;;
+  7) echo "Use --start or --stop manually with track_time.sh" ;;
+  q) exit 0 ;;
+  *) echo "Invalid option." ;;
+esac
