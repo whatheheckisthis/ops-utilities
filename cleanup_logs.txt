@@ -1,0 +1,18 @@
+#!/bin/bash
+# Deletes .log/.txt files older than 7 days from ./logs/
+
+LOG_DIR="./logs"
+DRY_RUN=false
+
+if [[ "$1" == "--dry-run" ]]; then
+  DRY_RUN=true
+fi
+
+echo "Cleaning logs in $LOG_DIR..."
+
+if $DRY_RUN; then
+  find "$LOG_DIR" -type f \( -name "*.log" -o -name "*.txt" \) -mtime +7 -print
+else
+  find "$LOG_DIR" -type f \( -name "*.log" -o -name "*.txt" \) -mtime +7 -exec rm {} \;
+  echo "Old logs deleted."
+fi
