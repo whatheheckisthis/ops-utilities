@@ -1,0 +1,13 @@
+#!/bin/bash
+# Extracts semantic version entries from CHANGELOG.md
+
+CHANGELOG="CHANGELOG.md"
+
+if [ ! -f "$CHANGELOG" ]; then
+  echo "CHANGELOG.md not found."
+  exit 1
+fi
+
+echo "Extracting version entries..."
+grep -E '^##\s*v?[0-9]+\.[0-9]+\.[0-9]+' "$CHANGELOG" > parsed_changelog.txt
+cat parsed_changelog.txt
