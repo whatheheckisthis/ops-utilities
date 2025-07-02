@@ -1,25 +1,80 @@
 #!/bin/bash
-# CLI menu for all utility scripts
+# Enhanced CLI menu for all utility scripts
 
-echo "=== Ops Toolkit Menu ==="
-echo "1) Initialize Environment"
-echo "2) Cleanup Logs"
-echo "3) Backup Repository"
-echo "4) Parse Changelog"
-echo "5) Tail Log with Timestamp"
-echo "6) Triage Logs"
-echo "7) Track Time"
-echo "q) Quit"
-read -p "Choose an option: " choice
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-case "$choice" in
-  1) bash scripts/init_environment.sh ;;
-  2) bash scripts/cleanup_logs.sh ;;
-  3) bash scripts/backup_repo.sh ;;
-  4) bash scripts/changelog_parser.sh ;;
-  5) read -p "Enter log file path: " path; bash scripts/timestamp_tail.sh "$path" ;;
-  6) bash scripts/triage_logs.sh ;;
-  7) echo "Use --start or --stop manually with track_time.sh" ;;
-  q) exit 0 ;;
-  *) echo "Invalid option." ;;
-esac
+create_bash_stub() {
+    read -p "Script name (no .sh): " name
+    filepath="$SCRIPT_DIR/${name}.sh"
+
+    if [[ -f "$filepath" ]]; then
+        echo "⚠️  File already exists."
+        return
+    fi
+
+    cat << 'EOF' > "$filepath"
+#!/bin/bash
+# Description: [INSERT PURPOSE HERE]
+# Usage: bash [SCRIPT_NAME].sh
+
+set -euo pipefail
+
+main() {
+    echo "This is a generated Bash script."
+    # TODO: Insert logic here
+}
+
+main "$@"
+EOF
+
+    chmod +x "$filepath"
+    echo "✅ Script created: $filepath"
+}
+
+generate_ssh_task_template() {
+    read -p "Enter remote host (user@host): " ssh_target
+    read -p "Enter remote path to execute: " remote_path
+
+    script_file="$SCRIPT_DIR/ssh_command_$(date +%s).sh"
+    cat << EOF > "$script_file"
+#!/bin/bash
+# Auto-generated SSH task script
+
+ssh $ssh_target << 'REMOTE'
+cd $remote_path
+echo "Running remote command..."
+# INSERT REMOTE TASKS HERE
+REMOTE
+EOF
+
+    chmod +x "$script_file"
+    echo "✅ SSH task script created: $script_file"
+}
+
+show_menu() {
+    clear
+    echo "⚙️  Ops Utilities – Main Menu"
+    echo "=============================="
+    echo "1. Create Bash script stub"
+    echo "2. Generate SSH task template"
+    echo "3. Run init_environment.sh"
+    echo "4. Run cleanup_logs.sh"
+    echo "5. Run changelog_parser.sh"
+    echo "6. Exit"
+    echo "=============================="
+}
+
+while true; do
+    show_menu
+    read -p "Choose an option [1-6]: " choice
+    case "$choice" in
+        1) create_bash_stub ;;
+        2) generate_ssh_task_template ;;
+        3) bash "$SCRIPT_DIR/init_environment.sh" ;;
+        4) bash "$SCRIPT_DIR/cleanup_logs.sh" ;;
+        5) bash "$SCRIPT_DIR/changelog_parser.sh" ;;
+        6) echo "Exiting."; break ;;
+        *) echo "❌ Invalid option" ;;
+    esac
+    read -p "Press Enter to continue..."
+done
