@@ -24,6 +24,18 @@ main() {
     # TODO: Insert logic here
 }
 
+cat << 'EOF' > "$filepath"
+#!/bin/bash
+# Description: [INSERT PURPOSE HERE]
+# Usage: bash [SCRIPT_NAME].sh
+
+set -euo pipefail
+
+main() {
+    echo "This is a generated Bash script."
+    # TODO: Insert logic here
+}
+
 main "$@"
 EOF
 
@@ -54,19 +66,18 @@ EOF
 show_menu() {
     clear
     echo "⚙️  Ops Utilities – Main Menu"
-    echo "=============================="
-    echo "1. Create Bash script stub"
-    echo "2. Generate SSH task template"
-    echo "3. Initialize Environment"
-    echo "4. Cleanup Logs"
-    echo "5. Backup Repository"
-    echo "6. Parse Changelog"
-    echo "7. Tail Log with Timestamp"
-    echo "8. Triage Logs"
-    echo "9. Track Time"
+    echo "====================================="
+    echo "1.  Create Bash script stub"
+    echo "2.  Generate SSH task template"
+    echo "3.  Initialize Environment"
+    echo "4.  Cleanup Logs"
+    echo "5.  Backup Repository"
+    echo "6.  Parse Changelog"
+    echo "7.  Tail Log with Timestamp"
+    echo "8.  Triage Logs"
+    echo "9.  Track Time"
     echo "10. Exit"
-    echo "=============================="
-}
+    echo "====================================="
 
 while true; do
     show_menu
@@ -78,9 +89,14 @@ while true; do
         4) bash "$SCRIPT_DIR/cleanup_logs.sh" ;;
         5) bash "$SCRIPT_DIR/backup_repo.sh" ;;
         6) bash "$SCRIPT_DIR/changelog_parser.sh" ;;
-        7) read -p "Enter log file path: " path; bash "$SCRIPT_DIR/timestamp_tail.sh" "$path" ;;
+        7) 
+            read -p "Enter log file path: " path
+            bash "$SCRIPT_DIR/timestamp_tail.sh" "$path"
+            ;;
         8) bash "$SCRIPT_DIR/triage_logs.sh" ;;
-        9) echo "Use --start or --stop manually with track_time.sh" ;;
+        9) 
+            echo "Use --start or --stop manually with track_time.sh"
+            ;;
         10) echo "Exiting."; break ;;
         *) echo "❌ Invalid option" ;;
     esac

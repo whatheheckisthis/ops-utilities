@@ -1,0 +1,18 @@
+<div class="utility-card" data-script="encrypt-file-script">
+  <h3>
+    Encrypt File 
+    <span class="badge badge-bash">Bash</span>
+  </h3>
+  <p>
+    Securely encrypt a file using OpenSSL. 
+    <br>
+    <span class="depends">Depends on: <b>setup-env.sh</b></span>
+  </p>
+  <button class="download-btn" onclick="downloadScript('encrypt-file-script', 'encrypt-file.sh')">Download Script</button>
+  <!-- ...expand/minimize as before... -->
+  <pre id="encrypt-file-script">
+#!/bin/bash
+# Requires: setup-env.sh
+openssl enc -aes-256-cbc -salt -in "$1" -out "$1.enc"
+  </pre>
+</div>
