@@ -24,7 +24,19 @@ main() {
     # TODO: Insert logic here
 }
 
-main "\$@"
+cat << 'EOF' > "$filepath"
+#!/bin/bash
+# Description: [INSERT PURPOSE HERE]
+# Usage: bash [SCRIPT_NAME].sh
+
+set -euo pipefail
+
+main() {
+    echo "This is a generated Bash script."
+    # TODO: Insert logic here
+}
+
+main "$@"
 EOF
 
     chmod +x "$filepath"
@@ -66,7 +78,6 @@ show_menu() {
     echo "9.  Track Time"
     echo "10. Exit"
     echo "====================================="
-}
 
 while true; do
     show_menu
