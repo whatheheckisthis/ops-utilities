@@ -27,9 +27,6 @@ Originally developed to support robust Conda-based validation and GitHub Actions
 ├── .github/        # GitHub Actions workflows
 └── README.md       # Project overview and usage
 
-Here’s your entire **legacy documentation block** wrapped in a **professional collapsible dropdown** for your main `README.md`. This assumes you're restructuring your repo and want to preserve documentation for older Bash utilities while signaling it's not the current development focus.
-
-You can paste this directly into your `README.md` under a section like `## 🔧 Legacy Utilities`.
 
 ---
 
