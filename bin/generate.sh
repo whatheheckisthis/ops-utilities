@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
-if [ "$1" == "" ]; then
+#
+# move_to_legacy.sh <filename>
+#
+# Moves a single file to bin/legacy/ with Git tracking.
+
+set -e
+
+# Check if filename is provided
+if [ -z "$1" ]; then
+  echo "Usage: bash move_to_legacy.sh <filename>"
+  exit 1
+fi
+
+FILE="$1"
+DEST="bin/legacy"if [ "$1" == "" ]; then
   echo "> Please supply the absolute path of the rsa-key"
   echo "> e.g: ./generate.sh /home/myuser/.ssh/id_rsa"
 else
