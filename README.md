@@ -1,62 +1,78 @@
+# ops-utilities
 
-# Bash Utilities for Secure Operations and Daily Workflow Automation
+**Bash Utilities for Secure Operations and Workflow Automation**
+
+This repository provides a growing collection of secure, modular, and reusable shell scripts designed to support:
+
+- CI/CD pipeline validation
+- Environment bootstrapping
+- Code linting and testing
+- Log cleanup and operational hygiene
+- System readiness and runtime import checks
+
+Originally developed to support robust Conda-based validation and GitHub Actions workflows, this repo is evolving into a structured toolbox for managing operational scripts in a clean, testable, and reusable way.
+
+---
+
+## 📁 Directory Structure
+
+```bash
+.
+├── ci/             # CI and workflow-specific scripts (import tests, env checks)
+├── scripts/        # General-purpose automation and cleanup tools
+├── config/         # Static configuration files (.flake8, environment.yml, etc.)
+├── tests/          # Test coverage for critical CI and utility functions
+├── docs/           # Internal documentation, contributing notes, and CI overview
+├── bin/legacy/     # Archived scripts (retained for reference, not active)
+├── .github/        # GitHub Actions workflows
+└── README.md       # Project overview and usage
+
+Here’s your entire **legacy documentation block** wrapped in a **professional collapsible dropdown** for your main `README.md`. This assumes you're restructuring your repo and want to preserve documentation for older Bash utilities while signaling it's not the current development focus.
+
+You can paste this directly into your `README.md` under a section like `## 🔧 Legacy Utilities`.
+
+---
+
+### 🔧 Legacy Utilities (Click to expand)
+
+<details>
+<summary><strong>Bash Utilities for Secure Operations and Daily Workflow Automation</strong></summary>
+
+<br>
 
 Encryption, decryption, secure file handling, and daily support-ready Bash tools designed for technical support, DevOps, and service workflows.
 
+---
 
+#### 1. Symmetric File Encryption Using OpenSSL
 
-## 1. Symmetric File Encryption Using OpenSSL
-
-This utility provides a fast, repeatable method to encrypt and decrypt files using symmetric AES-256 encryption via OpenSSL. All logic is encapsulated in Bash scripts and does not require additional tools beyond a Unix-based shell.
-
-
-
-### Encrypt a File
+Encrypt a file:
 
 ```bash
 ./generate.sh path/to/your_file.txt
 ```
 
-* Prompts for a passphrase.
-* Encrypted output is saved to the `./files` directory with a `.dat` extension.
-
----
-
-### Decrypt (interactive mode)
+Decrypt (interactive mode):
 
 ```bash
 ./read.sh ./files/your_file.txt.dat
 ```
 
-* Prompts for the passphrase.
-* Decrypted content is printed directly to the terminal.
-
----
-
-### Decrypt (with inline passphrase)
+Decrypt (with inline passphrase):
 
 ```bash
 ./read.sh ./files/your_file.txt.dat yourpassphrase
 ```
 
-* Avoids interactive input.
-* Outputs content to terminal.
-
----
-
-### Decrypt and Save Output to File
+Decrypt and save to file:
 
 ```bash
 ./read.sh ./files/your_file.txt.dat > output.txt
 ```
 
-* Allows storing decrypted content for pipeline use.
-
 ---
 
-## 2. Environment Bootstrapping Script
-
-Run this script to set up a local working directory and ensure dependencies like OpenSSL, Git, and Docker are installed.
+#### 2. Environment Bootstrapping
 
 ```bash
 bash ./init_environment.sh
@@ -64,86 +80,66 @@ bash ./init_environment.sh
 
 Creates:
 
-* `files/` directory (if not present)
-* Checks for OpenSSL installation
-* Checks Docker installation
-* Grants execution permission to scripts
+* `files/` directory
+* Checks for OpenSSL, Git, Docker
+* Makes scripts executable
 
 ---
 
-## 3. Daily Bash Tools for Ops & Support Teams
+#### 3. Daily Bash Tools for Ops & Support
 
-### Clean Logs Older Than 7 Days
+Clean logs older than 7 days:
 
 ```bash
 bash ./cleanup_logs.sh /var/log
 ```
 
-* Automatically deletes files older than 7 days in the specified directory.
-
----
-
-### Check for Active Python Virtual Environment
+Check Python virtual environment:
 
 ```bash
 bash ./check_venv.sh
 ```
 
-* Returns environment status and exits with code `1` if inactive.
-
----
-
-### Local GitHub Repo Backup (No API)
+Local GitHub repo backup:
 
 ```bash
 bash ./backup_repo.sh https://github.com/whatheheckisthis/Crypto-Detector
 ```
 
-* Creates a compressed `.tar.gz` mirror backup of the given repo.
-
----
-
-### Tail Log With Timestamps
+Tail log with timestamps:
 
 ```bash
 bash ./timestamp_tail.sh mylog.log
 ```
 
-* Prepends ISO 8601 timestamp to every line from a live `tail -f`.
-
----
-
-### Convert Markdown to HTML
+Convert Markdown to HTML:
 
 ```bash
 bash ./md_to_html.sh file.md
 ```
 
-* Converts `.md` files to `.html` using Pandoc (requires Pandoc to be pre-installed).
+---
+
+#### 4. Use Cases
+
+These scripts support:
+
+* Pre-commit Git hooks
+* Secure ops desk file handling
+* Encrypted data telemetry pipelines
+* Intern workflow bootstraps
 
 ---
 
-## 4. How to Use in a Workflow
+#### 5. Setup Notes
 
-These scripts can be integrated with:
-
-* Pre-commit Git hooks for secret scanning
-* Release log documentation
-* Secure file exchanges between service desks
-* Intern operational readiness in secure environments
-* Edge-to-cloud file pipelines for encrypted telemetry (e.g., as implemented in CARLA lane detection)
-
----
-
-## 5. Setup Notes
-
-Ensure the following permissions are applied:
+Make sure scripts are executable:
 
 ```bash
 chmod +x *.sh
 ```
 
-Run the full environment init with:
+Run full setup:
 
 ```bash
 ./init_environment.sh
@@ -151,31 +147,31 @@ Run the full environment init with:
 
 ---
 
-
-### File Tree:
+#### File Tree
 
 ```
-├── generate.sh             # Encrypts input files with OpenSSL
-├── read.sh                 # Decrypts encrypted files
-├── cleanup_logs.sh         # Deletes stale `.log` files
-├── check_venv.sh           # Checks if Python venv is active
-├── backup_repo.sh          # Mirrors GitHub repo to backup folder
-├── timestamp_tail.sh       # Adds timestamp to live `tail -f` output
-├── md_to_html.sh           # Converts Markdown files to HTML
-├── init_environment.sh     # Bootstraps VCS/venv/changelog check
-├── generate_auto_changelog.sh  # Generates CHANGELOG from Git
-├── cleanup_changelog.sh        # Cleans blank/duplicate entries
-└── files/                  # Folder to store encrypted files
+├── generate.sh
+├── read.sh
+├── cleanup_logs.sh
+├── check_venv.sh
+├── backup_repo.sh
+├── timestamp_tail.sh
+├── md_to_html.sh
+├── init_environment.sh
+├── generate_auto_changelog.sh
+├── cleanup_changelog.sh
+└── files/
 ```
 
 ---
 
-###  `generate.sh`
+#### Example Scripts
+
+<details>
+<summary><code>generate.sh</code> – Encrypt a file</summary>
 
 ```bash
 #!/bin/bash
-# Encrypts a file using OpenSSL with AES-256 encryption
-
 INPUT=$1
 OUTDIR="files"
 mkdir -p $OUTDIR
@@ -188,14 +184,13 @@ openssl enc -aes-256-cbc -salt -in "$INPUT" -out "$OUTDIR/$(basename "$INPUT").e
 echo "[✓] Encrypted file saved to $OUTDIR/$(basename "$INPUT").enc"
 ```
 
----
+</details>
 
-###  `read.sh`
+<details>
+<summary><code>read.sh</code> – Decrypt a file</summary>
 
 ```bash
 #!/bin/bash
-# Decrypts an encrypted file using OpenSSL
-
 INPUT=$1
 
 echo -n "Enter passphrase to decrypt: "
@@ -205,26 +200,24 @@ echo
 openssl enc -d -aes-256-cbc -in "$INPUT" -pass pass:$PASSPHRASE
 ```
 
----
+</details>
 
-### `cleanup_logs.sh`
+<details>
+<summary><code>cleanup_logs.sh</code> – Clean old log files</summary>
 
 ```bash
 #!/bin/bash
-# Deletes .log files older than 7 days from current directory
-
 find . -type f -name "*.log" -mtime +7 -exec rm -v {} \;
 echo "[✓] Old logs cleaned up"
 ```
 
----
+</details>
 
-###  `check_venv.sh`
+<details>
+<summary><code>check_venv.sh</code> – Check virtual environment</summary>
 
 ```bash
 #!/bin/bash
-# Checks whether a Python virtual environment is active
-
 if [[ "$VIRTUAL_ENV" != "" ]]; then
   echo "[✓] Virtual environment is active: $VIRTUAL_ENV"
 else
@@ -232,14 +225,13 @@ else
 fi
 ```
 
----
+</details>
 
-###  `backup_repo.sh`
+<details>
+<summary><code>backup_repo.sh</code> – Backup GitHub repo</summary>
 
 ```bash
 #!/bin/bash
-# Mirrors a GitHub repository to a local backup folder
-
 REPO_DIR=$1
 BACKUP_DIR="repo_backup_$(date +%F_%T)"
 mkdir "$BACKUP_DIR"
@@ -247,56 +239,51 @@ cp -r "$REPO_DIR" "$BACKUP_DIR"
 echo "[✓] Repository backed up to $BACKUP_DIR"
 ```
 
----
+</details>
 
-### `timestamp_tail.sh`
+<details>
+<summary><code>timestamp_tail.sh</code> – Add timestamps to log tail</summary>
 
 ```bash
 #!/bin/bash
-# Adds timestamps to the output of tail -f
-
 FILE=$1
 tail -f "$FILE" | while read line; do
   echo "[$(date +%F_%T)] $line"
 done
 ```
 
----
+</details>
 
-###  `md_to_html.sh`
+<details>
+<summary><code>md_to_html.sh</code> – Convert Markdown to HTML</summary>
 
 ```bash
 #!/bin/bash
-# Converts a Markdown file to HTML using pandoc
-
 INPUT=$1
 OUTPUT="${INPUT%.md}.html"
-
 pandoc "$INPUT" -o "$OUTPUT"
 echo "[✓] Converted $INPUT to $OUTPUT"
 ```
 
----
+</details>
 
-### `init_environment.sh`
+<details>
+<summary><code>init_environment.sh</code> – Environment bootstrap</summary>
 
 ```bash
 #!/bin/bash
-# Preps environment by checking VCS, venv, and updating changelog
-
 ./check_venv.sh
 ./generate_auto_changelog.sh
 echo "[✓] Environment ready"
 ```
 
----
+</details>
 
-### `generate_auto_changelog.sh`
+<details>
+<summary><code>generate_auto_changelog.sh</code> – Git changelog</summary>
 
 ```bash
 #!/bin/bash
-# Generates a changelog from Git history into AUTO_CHANGELOG.md
-
 OUTFILE="AUTO_CHANGELOG.md"
 echo "# Auto-generated Changelog" > $OUTFILE
 echo "" >> $OUTFILE
@@ -304,14 +291,13 @@ git log --pretty=format:'- %ad: %s' --date=short >> $OUTFILE
 echo "[✓] Changelog written to $OUTFILE"
 ```
 
----
+</details>
 
-### `cleanup_changelog.sh`
+<details>
+<summary><code>cleanup_changelog.sh</code> – Clean changelog</summary>
 
 ```bash
 #!/bin/bash
-# Cleans up AUTO_CHANGELOG.md by removing blank lines and duplicate entries
-
 FILE="AUTO_CHANGELOG.md"
 if [[ -f "$FILE" ]]; then
   awk '!seen[$0]++' "$FILE" | sed '/^$/d' > tmp && mv tmp "$FILE"
@@ -321,30 +307,15 @@ else
 fi
 ```
 
+</details>
+
 ---
 
-### Toolkit Scripts
+</details>  
+<!-- End legacy block -->
+---
 
-This repository includes a master script with useful Bash functions for:
-- Encrypted file handling (`generate.sh`, `read.sh`)
-- Log cleanup and timestamping
-- Markdown to HTML conversion
-- Changelog parsing and automation
-- GitHub repo backup
-
-### OpenSSL Bash Utilities
-
-These scripts support secure handling of logs and sensitive configuration files using symmetric encryption via `openssl`.
-
-- `generate.sh` — Encrypts any file using OpenSSL and saves output to `./files/`
-- `read.sh` — Decrypts previously encrypted files with optional inline passphrase support
-
-```bash
-# Encrypt a private key or log file
-./generate.sh path/to/your/file.txt
-
-# Decrypt the file interactively
-./read.sh ./files/file.txt.dat
+Let me know if you’d like to auto-link these scripts to their future `bin/legacy/` paths or include CI shields.
 
 
 
