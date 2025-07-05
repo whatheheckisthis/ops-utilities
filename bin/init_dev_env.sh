@@ -1,6 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# move_to_legacy.sh <filename>
+#
+# Moves a single file to bin/legacy/ with Git tracking.
 
-# init_dev_env.sh - One-click Dev Environment Setup Script
+set -e
+
+# Check if filename is provided
+if [ -z "$1" ]; then
+  echo "Usage: bash move_to_legacy.sh <filename>"
+  exit 1
+fi
+
+FILE="$1"
+DEST="bin/legacy"
 
 echo "🔧 Initializing Development Environment Setup..."
 
