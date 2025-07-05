@@ -30,14 +30,6 @@ Originally developed to support robust Conda-based validation and GitHub Actions
 
 ---
 
-### 🔧 Legacy Utilities (Click to expand)
-
-<details>
-<summary><strong>Bash Utilities for Secure Operations and Daily Workflow Automation</strong></summary>
-
-<br>
-
-Encryption, decryption, secure file handling, and daily support-ready Bash tools designed for technical support, DevOps, and service workflows.
 
 ---
 
