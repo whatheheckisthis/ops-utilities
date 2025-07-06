@@ -170,8 +170,5 @@ environment.yml            # Declarative Conda setup
 * [Flake8 Documentation](https://flake8.pycqa.org/)
 * [Issue #8: Conda Environment Verification](https://github.com/whatheheckisthis/ops-utilities/issues/8)
 
----
 
-
-```
 
