@@ -146,7 +146,6 @@ Run full setup:
 ├── check_venv.sh
 ├── backup_repo.sh
 ├── timestamp_tail.sh
-├── md_to_html.sh
 ├── init_environment.sh
 ├── generate_auto_changelog.sh
 ├── cleanup_changelog.sh
@@ -242,17 +241,7 @@ tail -f "$FILE" | while read line; do
 done
 ```
 
-</details>
 
-<details>
-<summary><code>md_to_html.sh</code> – Convert Markdown to HTML</summary>
-
-```bash
-#!/bin/bash
-INPUT=$1
-OUTPUT="${INPUT%.md}.html"
-pandoc "$INPUT" -o "$OUTPUT"
-echo "[✓] Converted $INPUT to $OUTPUT"
 ```
 
 </details>
@@ -303,9 +292,7 @@ fi
 
 </details>  
 <!-- End legacy block -->
----
 
-Let me know if you’d like to auto-link these scripts to their future `bin/legacy/` paths or include CI shields.
 
 
 
