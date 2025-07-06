@@ -288,10 +288,7 @@ fi
 
 </details>
 
----
 
-</details>  
-<!-- End legacy block -->
 
 
 
