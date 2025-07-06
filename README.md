@@ -1,4 +1,5 @@
-# ops-utilities
+TL;DR
+----
 
 **Bash Utilities for Secure Operations and Workflow Automation**
 
@@ -14,7 +15,7 @@ Originally developed to support robust Conda-based validation and GitHub Actions
 
 ---
 
-## 📁 Directory Structure
+## Directory Structure
 
 ```bash
 .
