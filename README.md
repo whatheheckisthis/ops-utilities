@@ -29,11 +29,6 @@ Originally developed to support robust Conda-based validation and GitHub Actions
 └── README.md       # Project overview and usage
 
 
----
-
-
----
-
 #### 1. Symmetric File Encryption Using OpenSSL
 
 Encrypt a file:
