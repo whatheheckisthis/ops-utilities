@@ -6,3 +6,10 @@ dependencies:
   - numpy
   - flake8
   - pytest
+  - mamba
+  - pip
+  - pre-commit
+  - coverage
+  - jupyter
+  - ipykernel
+  - pandoc
