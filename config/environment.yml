@@ -3,6 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
+  - numpy
   - flake8
   - pytest
-  - mamba
